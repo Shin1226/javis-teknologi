@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
+  // ✅ FIX: Base URL untuk production (Railway)
   const baseURL = 'https://login-system-javis-production-65cd.up.railway.app';
 
   const checkAuthStatus = async () => {
@@ -28,7 +29,9 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         console.log('🔍 Checking auth status...');
-        const response = await fetch(`${API_BASE}/auth/verify`, {
+        
+        // ✅ FIX: Ganti API_BASE menjadi baseURL
+        const response = await fetch(`${baseURL}/auth/verify`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -60,7 +63,8 @@ export const AuthProvider = ({ children }) => {
     try {
       console.log('🔄 Attempting login...');
       
-      const response = await fetch(`${API_BASE}/auth/login`, {
+      // ✅ FIX: Ganti API_BASE menjadi baseURL
+      const response = await fetch(`${baseURL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
