@@ -28,11 +28,10 @@ A secure and modern authentication system built with cutting-edge technologies.
 
 Visit the live application and use the demo credentials below:
 
-```bash
 🌐 Website: https://javis-teknologi.vercel.app/
 📧 Email: admin@javisteknologi.com
 🔑 Password: admin123
-```
+
 ---
 
 ## 🚀 Features
