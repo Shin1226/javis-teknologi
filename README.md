@@ -5,14 +5,35 @@
 
 ![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react)
 ![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js)
-![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase)
 ![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)
+![Railway](https://img.shields.io/badge/Railway-Backend-0B0D0E?style=for-the-badge&logo=railway)
 
-**A secure and modern authentication system built with cutting-edge technologies**
-
-[Features](#-features) • [Installation](#-installation) • [Tech Stack](#-tech-stack) • [API Docs](#-api-documentation)
+A secure and modern authentication system built with cutting-edge technologies.  
+**Live Demo • Features • Tech Stack • API Docs**
 
 </div>
+---
+
+## 🚀 Live Demo
+
+### 🌐 Production Deployment
+- **Frontend (Vercel):** [https://javis-teknologi.vercel.app/](https://javis-teknologi.vercel.app/)  
+- **Backend (Railway):** [https://javis-teknologi-production.up.railway.app](https://javis-teknologi-production.up.railway.app)  
+- **Database (Supabase):** Cloud PostgreSQL
+---
+
+## 📱 Access the Application
+
+Visit the live application and use the demo credentials below:
+
+```bash
+🌐 Website: https://javis-teknologi.vercel.app/
+📧 Email: admin@javisteknologi.com
+🔑 Password: admin123
+```
+---
 
 ## 🚀 Features
 
@@ -33,31 +54,44 @@
 ### ⚡ Performance
 - **Optimized React Components** with hooks
 - **Efficient API Calls** with error boundaries
-- **Fast MySQL Queries** with connection pooling
+- **Supabase PostgreSQL** with connection pooling
 - **Optimized Build** with Vite
 
 ## 📦 Installation
 
 ### Prerequisites
 - Node.js 16+ 
-- MySQL 8.0+
+- Supabase Account
 - npm or yarn
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/javisteknologi/login-system.git
-cd login-system
+git clone https://github.com/Shin1226/javis-teknologi.git
+cd javis-teknologi
 ```
 
 ### 2. Database Setup
+- Create account at supabase.com
+- Create new project
+- Get your project URL and API keys
+- Run the SQL schema in Supabase SQL Editor:
 ```sql
--- Create database
-CREATE DATABASE javisteknologi;
+-- Create users table
+CREATE TABLE users (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
+);
 
--- Or import provided schema
-mysql -u root -p javisteknologi < database/schema.sql
+-- Insert demo user
+INSERT INTO users (email, password, name) VALUES (
+  'admin@javisteknologi.com',
+  '$2a$12$LQv3c1yqBWVHxkd0L6kPOuYvHwqfGRVrktCAcT0iNGrTlYsujp5Rm', -- admin123
+  'Administrator'
+);
 ```
-
 ### 3. Backend Setup
 ```bash
 cd BE
@@ -69,11 +103,14 @@ npm install
 cp .env.example .env
 
 # Edit .env with your database credentials
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=javisteknologi
+DB_HOST=db.your-project-ref.supabase.co
+DB_USER=postgres
+DB_PASSWORD=your_supabase_password
+DB_NAME=postgres
+DB_PORT=5432
 JWT_SECRET=your_jwt_secret_key
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
 
 # Start development server
 npm run dev
@@ -112,18 +149,28 @@ cd BE && npm start
 
 ## 🌐 Access Points
 
+| Service | URL | Description |
+|---------|-----|-------------|
+| Frontend | https://javis-teknologi.vercel.app/ | Live React Application |
+| Backend API | https://javis-teknologi-production.up.railway.app | Production API Server |
+| Database | Supabase Cloud | PostgreSQL Database |
+| Health Check | /api/health| API Status Endpoint |
+
+## 🔧 Development URLs
+
 | Service | URL | Port | Description |
 |---------|-----|------|-------------|
-| Frontend | http://localhost:3000 | 3000 | React Application |
-| Backend API | http://localhost:5000 | 5000 | Express Server |
-| Health Check | http://localhost:5000/api/health | 5000 | API Status |
+| Frontend | http://localhost:3000 | 3000 | React Development Server |
+| Backend API |http://localhost:5000 | 5000 | Express Development Server |
+
 
 ## 👤 Demo Credentials
 
 ```bash
 Email: admin@javisteknologi.com
-Password: password123
+Password: admin123
 ```
+⚠️ Note: These are demo credentials for testing purposes only.
 
 ## 🛠 Tech Stack
 
@@ -140,13 +187,14 @@ Password: password123
 - **Express.js** - Web Framework
 - **JWT** - Authentication
 - **bcryptjs** - Password Hashing
-- **MySQL2** - Database Driver
+- **Supabase** - PostgreSQL Database
 - **CORS** - Cross-Origin Resource Sharing
 - **Cookie Parser** - Cookie Management
 
-### Database
-- **MySQL** - Relational Database
-- **Connection Pooling** - Performance Optimization
+### Deployment & Database
+- **Vercel** - Frontend Hosting
+- **Railway** - Backend Hosting
+- **Supabase** - PostgreSQL Database Hosting
 
 ## 📁 Project Structure
 
@@ -155,6 +203,9 @@ JAVIS-TEKNOLOGI/
 ├── 📁 FE/                 # Frontend React Application
 │   ├── 📁 src/
 │   │   ├── 📁 components/     # React Components
+│   │   │   ├── Login.jsx     # Login Page Component
+│   │   │   ├── Dashboard.jsx # Dashboard Component  
+│   │   │   └── DarkModeToggle.jsx # Dark Mode Switch
 │   │   ├── 📁 contexts/       # Auth Context
 │   │   ├── 📁 assets/         # Static Files
 │   │   └── App.jsx           # Main App Component
@@ -173,6 +224,10 @@ JAVIS-TEKNOLOGI/
 
 ## 🔌 API Documentation
 
+### Base URL
+Production: https://javis-teknologi-production.up.railway.app
+Development: http://localhost:5000
+
 ### Authentication Endpoints
 
 #### `POST /api/auth/login`
@@ -182,7 +237,7 @@ Authenticate user and return JWT token.
 ```json
 {
   "email": "admin@javisteknologi.com",
-  "password": "password123"
+  "password": "admin123"
 }
 ```
 
@@ -261,100 +316,69 @@ const useAuth = () => {
 
 ### Environment Variables
 ```env
-# Backend (.env)
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=javisteknologi
+# Backend (.env) - Supabase Configuration
+DB_HOST=db.your-project-ref.supabase.co
+DB_USER=postgres
+DB_PASSWORD=your_supabase_password
+DB_NAME=postgres
+DB_PORT=5432
 JWT_SECRET=your_super_secret_key
-NODE_ENV=development
-PORT=5000
+NODE_ENV=production
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_KEY=your_supabase_anon_key
+
+# Frontend (Production)
+VITE_API_BASE_URL=https://javis-teknologi-production.up.railway.app
 ```
 
-### MySQL Database Schema
+### Supabase Database Schema
 ```sql
+-- Users table for authentication
 CREATE TABLE users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
+
+-- Enable Row Level Security (optional)
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 ```
 
 ## 🚀 Deployment
 
-### Using PM2 (Production)
-```bash
-# Install PM2 globally
-npm install -g pm2
+### Frontend (Vercel)
+1. Push code to GitHub repository
+2. Connect repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Auto-deploy on git push
 
-# Start application
-pm2 start ecosystem.config.js
+### Backend (Railway)
+1. Connect GitHub repository to Railway
+2. Set Supabase environment variables in Railway dashboard
+3. Deploy automatically on git push
 
-# Monitor application
-pm2 monit
-```
+### Database (Supabase)
+1. Create account at supabase.com
+2. Create new project
+3. Run the provided SQL schema
+4. Get connection credentials
 
-### Docker Support (Optional)
-```dockerfile
-# Dockerfile available in repository
-docker-compose up -d
-```
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-## 👥 Team
-
-**PT. JAVIS TEKNOLOGI ALBAROKAH**  
-*Building the future of technology solutions*
-
 ---
 
 <div align="center">
+🌐 Live Application: https://javis-teknologi.vercel.app/
+🐛 Report Issues: GitHub Issues
+📧 Contact: Development Team
 
-**Need help?**  
-Open an issue or contact our development team 📧
-
-*Built with ❤️ using modern web technologies*
+Built with ❤️ using modern web technologies
 
 </div>
 ```
 
-## 🎨 Fitur Khusus README Ini:
-
-### ✅ **Visual Enhancement**
-- **Badges modern** dengan shields.io
-- **Emoji icons** untuk setiap section
-- **Center alignment** untuk judul utama
-- **Color coding** yang konsisten
-
-### ✅ **Struktur Profesional**
-- **Quick navigation** dengan anchor links
-- **Table of contents** implisit
-- **Code blocks** dengan syntax highlighting
-- **API documentation** yang jelas
-
-### ✅ **Developer Friendly**
-- **Step-by-step installation**
-- **Environment configuration** guide
-- **Troubleshooting sections**
-- **Deployment instructions**
-
-### ✅ **Brand Consistency**
-- **Company branding** yang kuat
-- **Professional tone** throughout
-- **Clear call-to-actions**
-- **Team attribution**
-
-README ini memberikan kesan sangat profesional dan menunjukkan kualitas codebase yang well-structured! 🚀

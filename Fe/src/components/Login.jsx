@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Loader } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import DarkModeToggle from './DarkModeToggle';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -157,6 +158,11 @@ const Login = () => {
             </div>
           </div>
 
+          {/* Dark Mode Toggle - Tambahkan di sini */}
+          <div className="absolute top-6 right-6">
+            <DarkModeToggle />
+          </div>
+
           {/* Login Form */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
             <div className="text-center mb-8">
@@ -180,8 +186,8 @@ const Login = () => {
                     type="email"
                     autoComplete="email"
                     className={`w-full px-4 py-3 rounded-xl border ${errors.email
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                        : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
                       } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
                     placeholder="admin@javisteknologi.com"
                     value={formData.email}
@@ -204,8 +210,8 @@ const Login = () => {
                       type={showPassword ? 'text' : 'password'}
                       autoComplete="current-password"
                       className={`w-full px-4 py-3 pr-12 rounded-xl border ${errors.password
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                        : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
                         } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
                       placeholder="admin123"
                       value={formData.password}

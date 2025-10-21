@@ -1,13 +1,13 @@
 // FE/src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { 
-  Users, 
-  Clock, 
-  Briefcase, 
-  DollarSign, 
+import {
+  Users,
+  Clock,
+  Briefcase,
+  DollarSign,
   Calendar,
-  Bell, 
+  Bell,
   Settings,
   LogOut,
   Search,
@@ -29,6 +29,7 @@ import {
   Shield,
   CreditCard
 } from 'lucide-react';
+import DarkModeToggle from './DarkModeToggle';
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -38,9 +39,9 @@ const Dashboard = () => {
 
   // Data statistik utama
   const statsData = [
-    { 
-      title: 'Total Karyawan', 
-      value: '128', 
+    {
+      title: 'Total Karyawan',
+      value: '128',
       subtitle: 'orang',
       change: '+5 dari bulan lalu',
       trend: 'up',
@@ -48,9 +49,9 @@ const Dashboard = () => {
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50 dark:bg-blue-900/20'
     },
-    { 
-      title: 'Hadir Hari Ini', 
-      value: '117', 
+    {
+      title: 'Hadir Hari Ini',
+      value: '117',
       subtitle: 'orang',
       change: '93% attendance rate',
       trend: 'up',
@@ -58,9 +59,9 @@ const Dashboard = () => {
       color: 'from-emerald-500 to-emerald-600',
       bgColor: 'bg-emerald-50 dark:bg-emerald-900/20'
     },
-    { 
-      title: 'Proyek Aktif', 
-      value: '8', 
+    {
+      title: 'Proyek Aktif',
+      value: '8',
       subtitle: 'proyek',
       change: '3 mendekati deadline',
       trend: 'warning',
@@ -68,9 +69,9 @@ const Dashboard = () => {
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50 dark:bg-purple-900/20'
     },
-    { 
-      title: 'Total Gaji', 
-      value: 'Rp 245', 
+    {
+      title: 'Total Gaji',
+      value: 'Rp 245',
       subtitle: 'juta',
       change: 'Bulan Oktober 2024',
       trend: 'stable',
@@ -82,8 +83,8 @@ const Dashboard = () => {
 
   // Data aktivitas terbaru
   const recentActivities = [
-    { 
-      id: 1, 
+    {
+      id: 1,
       employee: 'Rian Prasetyo',
       division: 'IT Developer',
       activity: 'Clock-in',
@@ -91,8 +92,8 @@ const Dashboard = () => {
       status: 'success',
       type: 'presensi'
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       employee: 'Admin Shindy',
       division: 'HRD',
       activity: 'Menambah data proyek baru',
@@ -100,8 +101,8 @@ const Dashboard = () => {
       status: 'info',
       type: 'system'
     },
-    { 
-      id: 3, 
+    {
+      id: 3,
       employee: 'Dea Oktaviani',
       division: 'Marketing',
       activity: 'Mengajukan cuti sakit',
@@ -109,8 +110,8 @@ const Dashboard = () => {
       status: 'warning',
       type: 'cuti'
     },
-    { 
-      id: 4, 
+    {
+      id: 4,
       employee: 'Tim IT',
       division: 'Technology',
       activity: 'Upload laporan sprint',
@@ -122,25 +123,25 @@ const Dashboard = () => {
 
   // Data proyek aktif
   const activeProjects = [
-    { 
-      name: 'Mobile App Development', 
-      progress: 75, 
+    {
+      name: 'Mobile App Development',
+      progress: 75,
       team: 8,
       deadline: '3 hari lagi',
       status: 'active',
       manager: 'Budi Santoso'
     },
-    { 
-      name: 'Website Company Profile', 
-      progress: 45, 
+    {
+      name: 'Website Company Profile',
+      progress: 45,
       team: 4,
       deadline: '2 minggu',
       status: 'active',
       manager: 'Sari Dewi'
     },
-    { 
-      name: 'Sistem ERP Internal', 
-      progress: 90, 
+    {
+      name: 'Sistem ERP Internal',
+      progress: 90,
       team: 12,
       deadline: '1 minggu',
       status: 'completed',
@@ -221,38 +222,38 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             {/* Left Section */}
             <div className="flex items-center space-x-4">
-              <button 
+              <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
                 className="lg:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
                 {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
-              
-<div className="flex items-center space-x-3">
-  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow border border-gray-200">
-    <img 
-      src="/assets/logo.png" 
-      alt="JAVIS TEKNOLOGI"
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        // Fallback jika logo tidak ditemukan
-        e.target.style.display = 'none';
-        const fallback = document.createElement('div');
-        fallback.className = 'w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded flex items-center justify-center';
-        fallback.innerHTML = '<span class="text-white font-bold text-xs">JT</span>';
-        e.target.parentNode.appendChild(fallback);
-      }}
-    />
-  </div>
-  <div className="hidden sm:block">
-    <h1 className="text-lg font-bold text-gray-900 dark:text-white">
-      JAVIS TEKNOLOGI ALBAROKAH
-    </h1>
-    <p className="text-xs text-gray-500 dark:text-gray-400">
-      Employee Management System
-    </p>
-  </div>
-</div>
+
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow border border-gray-200">
+                  <img
+                    src="/assets/logo.png"
+                    alt="JAVIS TEKNOLOGI"
+                    className="w-8 h-8 object-contain"
+                    onError={(e) => {
+                      // Fallback jika logo tidak ditemukan
+                      e.target.style.display = 'none';
+                      const fallback = document.createElement('div');
+                      fallback.className = 'w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded flex items-center justify-center';
+                      fallback.innerHTML = '<span class="text-white font-bold text-xs">JT</span>';
+                      e.target.parentNode.appendChild(fallback);
+                    }}
+                  />
+                </div>
+                <div className="hidden sm:block">
+                  <h1 className="text-lg font-bold text-gray-900 dark:text-white">
+                    JAVIS TEKNOLOGI ALBAROKAH
+                  </h1>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Employee Management System
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Center Section - Search */}
@@ -271,12 +272,14 @@ const Dashboard = () => {
 
             {/* Right Section */}
             <div className="flex items-center space-x-3">
+              {/* Dark Mode Toggle */}
+              <DarkModeToggle />
               {/* Notifications */}
               <button className="relative p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
-              
+
               {/* User Profile */}
               <div className="flex items-center space-x-3">
                 <div className="text-right hidden sm:block">
@@ -312,11 +315,10 @@ const Dashboard = () => {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                    activeTab === item.id 
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' 
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${activeTab === item.id
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
                       : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                  }`}
+                    }`}
                 >
                   <item.icon className="w-5 h-5" />
                   <span className="font-medium text-sm">{item.label}</span>
@@ -355,11 +357,11 @@ const Dashboard = () => {
               <div className="mt-4 lg:mt-0">
                 <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
                   <Calendar className="w-4 h-4" />
-                  <span className="text-sm">{new Date().toLocaleDateString('id-ID', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
+                  <span className="text-sm">{new Date().toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
                   })}</span>
                 </div>
               </div>
@@ -374,11 +376,10 @@ const Dashboard = () => {
                   <div className={`p-2 rounded-lg bg-gradient-to-r ${stat.color} text-white shadow`}>
                     {stat.icon}
                   </div>
-                  <div className={`text-xs font-medium ${
-                    stat.trend === 'up' ? 'text-emerald-600 dark:text-emerald-400' : 
-                    stat.trend === 'warning' ? 'text-amber-600 dark:text-amber-400' : 
-                    'text-gray-600 dark:text-gray-400'
-                  }`}>
+                  <div className={`text-xs font-medium ${stat.trend === 'up' ? 'text-emerald-600 dark:text-emerald-400' :
+                      stat.trend === 'warning' ? 'text-amber-600 dark:text-amber-400' :
+                        'text-gray-600 dark:text-gray-400'
+                    }`}>
                     {stat.change}
                   </div>
                 </div>
@@ -439,7 +440,7 @@ const Dashboard = () => {
                         <span className="text-sm text-gray-600 dark:text-gray-400 w-8">{day.day}</span>
                         <div className="flex-1 mx-3">
                           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-emerald-500 h-2 rounded-full transition-all duration-500"
                               style={{ width: `${(day.hadir / 128) * 100}%` }}
                             ></div>
@@ -468,18 +469,16 @@ const Dashboard = () => {
                           <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                             {project.name}
                           </span>
-                          <span className={`text-xs px-2 py-1 rounded-full ${
-                            project.status === 'completed' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400' :
-                            'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
-                          }`}>
+                          <span className={`text-xs px-2 py-1 rounded-full ${project.status === 'completed' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400' :
+                              'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
+                            }`}>
                             {project.status === 'completed' ? 'Selesai' : 'Aktif'}
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div 
-                            className={`h-2 rounded-full transition-all duration-500 ${
-                              project.status === 'completed' ? 'bg-emerald-500' : 'bg-blue-500'
-                            }`}
+                          <div
+                            className={`h-2 rounded-full transition-all duration-500 ${project.status === 'completed' ? 'bg-emerald-500' : 'bg-blue-500'
+                              }`}
                             style={{ width: `${project.progress}%` }}
                           ></div>
                         </div>
@@ -503,11 +502,10 @@ const Dashboard = () => {
                   {reminders.map((reminder) => (
                     <div key={reminder.id} className={`p-3 rounded-lg border ${getReminderColor(reminder.type)} transition-all hover:shadow-sm`}>
                       <div className="flex items-start space-x-3">
-                        <div className={`p-1 rounded ${
-                          reminder.type === 'warning' ? 'text-amber-600 bg-amber-100 dark:bg-amber-900/30' :
-                          reminder.type === 'deadline' ? 'text-red-600 bg-red-100 dark:bg-red-900/30' :
-                          'text-purple-600 bg-purple-100 dark:bg-purple-900/30'
-                        }`}>
+                        <div className={`p-1 rounded ${reminder.type === 'warning' ? 'text-amber-600 bg-amber-100 dark:bg-amber-900/30' :
+                            reminder.type === 'deadline' ? 'text-red-600 bg-red-100 dark:bg-red-900/30' :
+                              'text-purple-600 bg-purple-100 dark:bg-purple-900/30'
+                          }`}>
                           {reminder.icon}
                         </div>
                         <div className="flex-1">
@@ -531,7 +529,7 @@ const Dashboard = () => {
                   {divisionData.map((division, index) => (
                     <div key={index} className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <div 
+                        <div
                           className="w-3 h-3 rounded-full"
                           style={{ backgroundColor: division.color }}
                         ></div>
@@ -591,7 +589,7 @@ const Dashboard = () => {
 
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         ></div>
