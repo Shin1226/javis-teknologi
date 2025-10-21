@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // ✅ FIX: Base URL untuk production (Railway)
-  const baseURL = 'login-system-javis-production.up.railway.app';
+ const baseURL = import.meta.env.VITE_API_URL || 'https://login-system-javis-production-65cd.up.railway.app';
 
   const checkAuthStatus = async () => {
     try {
