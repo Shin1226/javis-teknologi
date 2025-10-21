@@ -1,4 +1,3 @@
-// BE/routes/auth.js
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -29,13 +28,14 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Check if user exists
-    const [users] = await db.query(
-      'SELECT * FROM users WHERE email = ?',
+    // ✅ FIX: PostgreSQL syntax - ganti ? menjadi $1
+    const result = await db.query(
+      'SELECT * FROM users WHERE email = $1',
       [email]
     );
 
-    if (users.length === 0) {
+    // ✅ FIX: Pakai result.rows bukan [users]
+    if (result.rows.length === 0) {
       console.log('❌ User not found:', email);
       return res.status(401).json({ 
         success: false,
@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    const user = users[0];
+    const user = result.rows[0];
     console.log('✅ User found:', user.email);
 
     // Check password
@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
 
     console.log('✅ Login successful for user:', email);
 
-    // Return token in response body (for frontend to store in localStorage)
+    // Return response
     res.json({
       success: true,
       message: 'Login successful',
@@ -91,15 +91,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// Logout endpoint
-router.post('/logout', (req, res) => {
-  res.json({ 
-    success: true,
-    message: 'Logout successful' 
-  });
-});
-
-// Check auth status
+// Verify token endpoint
 router.get('/verify', async (req, res) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
@@ -113,12 +105,13 @@ router.get('/verify', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    const [users] = await db.query(
-      'SELECT id, email, name FROM users WHERE id = ?',
+    // ✅ FIX: PostgreSQL syntax
+    const result = await db.query(
+      'SELECT id, email, name FROM users WHERE id = $1',
       [decoded.userId]
     );
 
-    if (users.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(401).json({ 
         success: false,
         error: 'User not found' 
@@ -127,7 +120,7 @@ router.get('/verify', async (req, res) => {
 
     res.json({ 
       success: true,
-      user: users[0] 
+      user: result.rows[0] 
     });
 
   } catch (error) {
@@ -139,7 +132,7 @@ router.get('/verify', async (req, res) => {
   }
 });
 
-// Get current user (alternative to /verify)
+// Get current user
 router.get('/me', async (req, res) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
@@ -153,12 +146,13 @@ router.get('/me', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    const [users] = await db.query(
-      'SELECT id, email, name FROM users WHERE id = ?',
+    // ✅ FIX: PostgreSQL syntax
+    const result = await db.query(
+      'SELECT id, email, name FROM users WHERE id = $1',
       [decoded.userId]
     );
 
-    if (users.length === 0) {
+    if (result.rows.length === 0) {
       return res.status(401).json({ 
         success: false,
         error: 'User not found' 
@@ -167,7 +161,7 @@ router.get('/me', async (req, res) => {
 
     res.json({ 
       success: true,
-      user: users[0] 
+      user: result.rows[0] 
     });
   } catch (error) {
     console.error('Me endpoint error:', error);
@@ -176,6 +170,14 @@ router.get('/me', async (req, res) => {
       error: 'Invalid token' 
     });
   }
+});
+
+// Logout endpoint
+router.post('/logout', (req, res) => {
+  res.json({ 
+    success: true,
+    message: 'Logout successful' 
+  });
 });
 
 export default router;
