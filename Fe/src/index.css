@@ -10,7 +10,6 @@
   }
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -27,7 +26,6 @@
   @apply bg-gray-500 dark:bg-gray-500;
 }
 
-/* Loading animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
