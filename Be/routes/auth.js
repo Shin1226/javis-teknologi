@@ -46,9 +46,20 @@ router.post('/login', async (req, res) => {
     const user = result.rows[0];
     console.log('✅ User found:', user.email);
 
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    console.log('🔑 Password validation:', isPasswordValid);
+// Check password - TAMBAH DEBUG INFO
+console.log('🔐 Input password:', `"${password}"`, 'Length:', password.length);
+console.log('💾 Stored hash:', `"${user.password}"`, 'Length:', user.password.length);
+console.log('📧 User email:', `"${user.email}"`);
+
+const isPasswordValid = await bcrypt.compare(password, user.password);
+console.log('🔑 Password validation:', isPasswordValid);
+
+// TEST MANUAL - coba bandingkan dengan string literal
+const testCompare1 = await bcrypt.compare('admin123', user.password);
+console.log('🧪 Test with "admin123":', testCompare1);
+
+const testCompare2 = await bcrypt.compare('password123', user.password);
+console.log('🧪 Test with "password123":', testCompare2);
     
     if (!isPasswordValid) {
       console.log('❌ Invalid password for user:', email);
