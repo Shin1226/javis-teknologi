@@ -1,18 +1,21 @@
-// BE/config/database.js - UNTUK POSTGRESQL (SUPABASE)
 import pkg from 'pg';
 const { Pool } = pkg;
 
 const db = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { 
-    rejectUnauthorized: false 
-  } : false
+  ssl: {
+    rejectUnauthorized: false
+  },
+  // Settings optimal untuk connection pooling
+  connectionTimeoutMillis: 5000,
+  idleTimeoutMillis: 30000,
+  max: 10
 });
 
 // Test connection
 db.connect()
   .then(() => {
-    console.log('✅ Connected to PostgreSQL database (Supabase)');
+    console.log('✅ Connected to Supabase PostgreSQL via Connection Pooling');
   })
   .catch(error => {
     console.error('❌ Database connection failed:', error.message);
