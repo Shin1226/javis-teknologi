@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // ✅ FIX: Base URL untuk production (Railway)
-  const baseURL = 'login-system-javis-production.up.railway.app';
+  const baseURL = 'https://login-system-javis-production.up.railway.app';
 
   const checkAuthStatus = async () => {
     try {
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
       console.log('🔄 Attempting login...');
       
       // ✅ FIX: Ganti API_BASE menjadi baseURL
-      const response = await fetch(`${baseURL}/auth/login`, {
+      const response = await fetch(`${baseURL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
