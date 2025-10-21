@@ -8,7 +8,7 @@ const router = express.Router();
 // Protected dashboard route
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const [users] = await db.execute(
+    const [users] = await db.query(
       'SELECT id, email, name, created_at FROM users WHERE id = ?',
       [req.user.userId]
     );

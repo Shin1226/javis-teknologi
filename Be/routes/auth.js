@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Check if user exists
-    const [users] = await db.execute(
+    const [users] = await db.query(
       'SELECT * FROM users WHERE email = ?',
       [email]
     );
@@ -113,7 +113,7 @@ router.get('/verify', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    const [users] = await db.execute(
+    const [users] = await db.query(
       'SELECT id, email, name FROM users WHERE id = ?',
       [decoded.userId]
     );
@@ -153,7 +153,7 @@ router.get('/me', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    const [users] = await db.execute(
+    const [users] = await db.query(
       'SELECT id, email, name FROM users WHERE id = ?',
       [decoded.userId]
     );
