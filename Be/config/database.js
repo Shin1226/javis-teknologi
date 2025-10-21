@@ -1,21 +1,18 @@
-// BE/config/database.js
-import mysql from 'mysql2/promise';
+// BE/config/database.js - UNTUK POSTGRESQL (SUPABASE)
+import pkg from 'pg';
+const { Pool } = pkg;
 
-const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'javisteknologi',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { 
+    rejectUnauthorized: false 
+  } : false
 });
 
 // Test connection
-db.getConnection()
-  .then(connection => {
-    console.log('✅ Connected to MySQL database');
-    connection.release();
+db.connect()
+  .then(() => {
+    console.log('✅ Connected to PostgreSQL database (Supabase)');
   })
   .catch(error => {
     console.error('❌ Database connection failed:', error.message);
