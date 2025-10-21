@@ -32,7 +32,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsLoading(true);
@@ -43,16 +43,16 @@ const Login = () => {
     try {
       const result = await login(formData.email, formData.password);
       console.log('Login result:', result);
-      
+
       if (!result.success) {
         let errorMessage = result.error;
-        
+
         if (result.error.includes('401') || result.error.toLowerCase().includes('invalid')) {
           errorMessage = 'Email atau password salah. Silakan coba lagi.';
         } else if (result.error.includes('Network error')) {
           errorMessage = 'Tidak dapat terhubung ke server. Pastikan backend berjalan di port 5000.';
         }
-        
+
         setErrors({ submit: errorMessage });
       }
     } catch (error) {
@@ -69,7 +69,7 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
-    
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -83,13 +83,13 @@ const Login = () => {
       {/* Left Side - Logo Section */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-blue-800 flex-col justify-between p-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
-        
+
         {/* Logo */}
         <div className="relative z-10">
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/30">
-              <img 
-                src="assets/logo.png" 
+              <img
+                src="assets/logo.png"
                 alt="JAVIS TEKNOLOGI ALBAROKAH"
                 className="w-18 h-18 object-contain"
                 onError={(e) => {
@@ -137,8 +137,8 @@ const Login = () => {
           <div className="lg:hidden flex justify-center mb-8">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                <img 
-                  src="/logo.png" 
+                <img
+                  src="/assets/logo.png"
                   alt="JAVIS TEKNOLOGI ALBAROKAH"
                   className="w-10 h-10 object-contain"
                   onError={(e) => {
@@ -179,11 +179,10 @@ const Login = () => {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    className={`w-full px-4 py-3 rounded-xl border ${
-                      errors.email 
-                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.email
+                        ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                         : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
-                    } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
+                      } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
                     placeholder="admin@javisteknologi.com"
                     value={formData.email}
                     onChange={handleChange}
@@ -204,12 +203,11 @@ const Login = () => {
                       name="password"
                       type={showPassword ? 'text' : 'password'}
                       autoComplete="current-password"
-                      className={`w-full px-4 py-3 pr-12 rounded-xl border ${
-                        errors.password 
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500' 
+                      className={`w-full px-4 py-3 pr-12 rounded-xl border ${errors.password
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'
-                      } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
-                      placeholder="password123"
+                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors`}
+                      placeholder="admin123"
                       value={formData.password}
                       onChange={handleChange}
                       disabled={isLoading}
@@ -265,7 +263,7 @@ const Login = () => {
             <div className="mt-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-800 dark:text-blue-200 text-center">
                 <strong>Demo credentials:</strong><br />
-                admin@javisteknologi.com / password123
+                admin@javisteknologi.com / admin123
               </p>
             </div>
           </div>
