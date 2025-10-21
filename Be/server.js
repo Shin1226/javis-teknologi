@@ -9,7 +9,10 @@ const app = express();
 
 // CORS configuration - allow all origins in development
 app.use(cors({
-  origin: true, // Allow all origins in development
+  origin: [
+    'https://javis-teknologi.vercel.app', // URL Vercel Anda
+    'http://localhost:3000'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']

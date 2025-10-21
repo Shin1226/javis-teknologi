@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  const API_BASE = 'http://localhost:5000/api';
+  const baseURL = 'https://login-system-javis-production-65cd.up.railway.app';
 
   const checkAuthStatus = async () => {
     try {
