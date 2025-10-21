@@ -31,9 +31,7 @@ Visit the live application and use the demo credentials below:
 ```bash
 🌐 Website: https://javis-teknologi.vercel.app/
 📧 Email: admin@javisteknologi.com
-🔑 Password: admin123
-```
----
+🔑 Password: admin123```
 
 ## 🚀 Features
 
