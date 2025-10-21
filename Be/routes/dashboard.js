@@ -4,16 +4,13 @@ import db from '../config/database.js';
 
 const router = express.Router();
 
-// Protected dashboard route
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    // ✅ FIX: PostgreSQL syntax - ganti ? menjadi $1
     const result = await db.query(
       'SELECT id, email, name, created_at FROM users WHERE id = $1',
       [req.user.userId]
     );
 
-    // ✅ FIX: Pakai result.rows bukan [users]
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'User not found' });
     }

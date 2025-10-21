@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise';
 
 async function testDatabase() {
   try {
-    console.log('🧪 Testing database connection...');
+    console.log('Testing database connection...');
     
     const connection = await mysql.createConnection({
       host: 'localhost',
@@ -11,30 +11,27 @@ async function testDatabase() {
       database: 'javisteknologi'
     });
 
-    console.log('✅ Database connected successfully!');
-    
-    // Test query users
+    console.log('Database connected successfully!');
+ 
     const [users] = await connection.execute('SELECT * FROM users');
-    console.log('📊 Total users:', users.length);
-    
-    // Show user details
+    console.log('Total users:', users.length);
+
     if (users.length > 0) {
-      console.log('👤 User details:');
+      console.log('User details:');
       users.forEach(user => {
-        console.log('  Email:', user.email);
-        console.log('  Name:', user.name);
-        console.log('  Password hash:', user.password);
-        console.log('  Hash length:', user.password.length);
-        console.log('  ---');
+        console.log('Name:', user.name);
+        console.log('Password hash:', user.password);
+        console.log('Hash length:', user.password.length);
+        console.log('---');
       });
     } else {
-      console.log('❌ No users found in database');
+      console.log('No users found in database');
     }
     
     await connection.end();
     
   } catch (error) {
-    console.log('❌ Database error:', error.message);
+    console.log('Database error:', error.message);
   }
 }
 

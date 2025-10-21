@@ -1,4 +1,3 @@
-// client/src/components/DarkModeToggle.jsx
 import React, { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
@@ -30,7 +29,6 @@ const DarkModeToggle = () => {
     }
   };
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <button

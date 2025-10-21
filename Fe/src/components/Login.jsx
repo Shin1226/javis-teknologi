@@ -1,4 +1,3 @@
-// client/src/components/Login.jsx
 import React, { useState } from 'react';
 import { Eye, EyeOff, Loader } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -131,10 +130,8 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
       <div className="flex-1 flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-8">
         <div className="w-full max-w-md">
-          {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-8">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
@@ -158,12 +155,10 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Dark Mode Toggle - Tambahkan di sini */}
           <div className="absolute top-6 right-6">
             <DarkModeToggle />
           </div>
 
-          {/* Login Form */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">

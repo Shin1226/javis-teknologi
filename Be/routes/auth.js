@@ -6,14 +6,12 @@ import db from '../config/database.js';
 
 const router = express.Router();
 
-// Login endpoint
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
     console.log('🔐 Login attempt:', { email });
 
-    // Validation
     if (!email || !password) {
       return res.status(400).json({ 
         success: false,
@@ -28,15 +26,13 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // ✅ FIX: PostgreSQL syntax - ganti ? menjadi $1
     const result = await db.query(
       'SELECT * FROM users WHERE email = $1',
       [email]
     );
 
-    // ✅ FIX: Pakai result.rows bukan [users]
     if (result.rows.length === 0) {
-      console.log('❌ User not found:', email);
+      console.log('User not found:', email);
       return res.status(401).json({ 
         success: false,
         error: 'Invalid credentials' 
@@ -44,32 +40,29 @@ router.post('/login', async (req, res) => {
     }
 
     const user = result.rows[0];
-    console.log('✅ User found:', user.email);
+    console.log('User found:', user.email);
 
-// Check password - TAMBAH DEBUG INFO
-console.log('🔐 Input password:', `"${password}"`, 'Length:', password.length);
-console.log('💾 Stored hash:', `"${user.password}"`, 'Length:', user.password.length);
-console.log('📧 User email:', `"${user.email}"`);
+console.log('Input password:', `"${password}"`, 'Length:', password.length);
+console.log('Stored hash:', `"${user.password}"`, 'Length:', user.password.length);
+console.log('User email:', `"${user.email}"`);
 
 const isPasswordValid = await bcrypt.compare(password, user.password);
-console.log('🔑 Password validation:', isPasswordValid);
+console.log('Password validation:', isPasswordValid);
 
-// TEST MANUAL - coba bandingkan dengan string literal
 const testCompare1 = await bcrypt.compare('admin123', user.password);
-console.log('🧪 Test with "admin123":', testCompare1);
+console.log('Test with "admin123":', testCompare1);
 
 const testCompare2 = await bcrypt.compare('password123', user.password);
-console.log('🧪 Test with "password123":', testCompare2);
+console.log('Test with "password123":', testCompare2);
     
     if (!isPasswordValid) {
-      console.log('❌ Invalid password for user:', email);
+      console.log('Invalid password for user:', email);
       return res.status(401).json({ 
         success: false,
         error: 'Invalid credentials' 
       });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { 
         userId: user.id, 
@@ -79,9 +72,8 @@ console.log('🧪 Test with "password123":', testCompare2);
       { expiresIn: '24h' }
     );
 
-    console.log('✅ Login successful for user:', email);
+    console.log('Login successful for user:', email);
 
-    // Return response
     res.json({
       success: true,
       message: 'Login successful',
@@ -94,7 +86,7 @@ console.log('🧪 Test with "password123":', testCompare2);
     });
 
   } catch (error) {
-    console.error('💥 Login error:', error);
+    console.error('Login error:', error);
     res.status(500).json({ 
       success: false,
       error: 'Internal server error' 
@@ -102,7 +94,6 @@ console.log('🧪 Test with "password123":', testCompare2);
   }
 });
 
-// Verify token endpoint
 router.get('/verify', async (req, res) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
@@ -116,7 +107,6 @@ router.get('/verify', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    // ✅ FIX: PostgreSQL syntax
     const result = await db.query(
       'SELECT id, email, name FROM users WHERE id = $1',
       [decoded.userId]
@@ -143,7 +133,6 @@ router.get('/verify', async (req, res) => {
   }
 });
 
-// Get current user
 router.get('/me', async (req, res) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '');
@@ -157,7 +146,6 @@ router.get('/me', async (req, res) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-key-for-development');
     
-    // ✅ FIX: PostgreSQL syntax
     const result = await db.query(
       'SELECT id, email, name FROM users WHERE id = $1',
       [decoded.userId]
@@ -183,7 +171,6 @@ router.get('/me', async (req, res) => {
   }
 });
 
-// Logout endpoint
 router.post('/logout', (req, res) => {
   res.json({ 
     success: true,

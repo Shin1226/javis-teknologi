@@ -1,4 +1,3 @@
-// FE/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -7,7 +6,6 @@ import Dashboard from './components/Dashboard';
 import Layout from './components/Layout';
 import './index.css';
 
-// Protected Route Component
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
@@ -22,7 +20,6 @@ const ProtectedRoute = ({ children }) => {
   return user ? children : <Navigate to="/" />;
 };
 
-// Public Route Component (redirect ke dashboard jika sudah login)
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
@@ -57,7 +54,6 @@ function AppContent() {
             </ProtectedRoute>
           } 
         />
-        {/* Redirect unknown routes to login */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Layout>

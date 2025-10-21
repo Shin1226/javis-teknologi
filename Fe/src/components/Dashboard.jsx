@@ -1,4 +1,3 @@
-// FE/src/components/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -37,7 +36,6 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Data statistik utama
   const statsData = [
     {
       title: 'Total Karyawan',
@@ -81,7 +79,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Data aktivitas terbaru
   const recentActivities = [
     {
       id: 1,
@@ -121,7 +118,6 @@ const Dashboard = () => {
     },
   ];
 
-  // Data proyek aktif
   const activeProjects = [
     {
       name: 'Mobile App Development',
@@ -149,7 +145,6 @@ const Dashboard = () => {
     },
   ];
 
-  // Data reminder
   const reminders = [
     {
       id: 1,
@@ -174,7 +169,6 @@ const Dashboard = () => {
     }
   ];
 
-  // Data grafik absensi (mock)
   const attendanceData = [
     { day: 'Sen', hadir: 120, terlambat: 5 },
     { day: 'Sel', hadir: 118, terlambat: 7 },
@@ -183,7 +177,6 @@ const Dashboard = () => {
     { day: 'Jum', hadir: 117, terlambat: 8 },
   ];
 
-  // Data divisi karyawan
   const divisionData = [
     { name: 'IT & Technology', value: 35, color: '#3B82F6' },
     { name: 'Marketing', value: 25, color: '#8B5CF6' },
@@ -216,11 +209,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 font-inter">
-      {/* Top Navigation */}
       <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
-            {/* Left Section */}
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -236,7 +227,6 @@ const Dashboard = () => {
                     alt="JAVIS TEKNOLOGI"
                     className="w-8 h-8 object-contain"
                     onError={(e) => {
-                      // Fallback jika logo tidak ditemukan
                       e.target.style.display = 'none';
                       const fallback = document.createElement('div');
                       fallback.className = 'w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded flex items-center justify-center';
@@ -256,7 +246,6 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Center Section - Search */}
             <div className="hidden md:flex flex-1 max-w-md mx-8">
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -270,17 +259,13 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Right Section */}
             <div className="flex items-center space-x-3">
-              {/* Dark Mode Toggle */}
               <DarkModeToggle />
-              {/* Notifications */}
               <button className="relative p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
 
-              {/* User Profile */}
               <div className="flex items-center space-x-3">
                 <div className="text-right hidden sm:block">
                   <p className="text-sm font-medium text-gray-900 dark:text-white">{user?.name || 'Admin'}</p>
@@ -298,10 +283,8 @@ const Dashboard = () => {
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
         <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-300 ease-in-out`}>
           <div className="flex flex-col h-full">
-            {/* Navigation */}
             <nav className="flex-1 px-4 py-6 space-y-1">
               {[
                 { id: 'dashboard', label: 'Dashboard Overview', icon: BarChart3 },
@@ -326,7 +309,6 @@ const Dashboard = () => {
               ))}
             </nav>
 
-            {/* Bottom Actions */}
             <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700 space-y-1">
               <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200">
                 <Settings className="w-5 h-5" />
@@ -343,9 +325,7 @@ const Dashboard = () => {
           </div>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1 p-6">
-          {/* Welcome Banner */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-6 text-white mb-6">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -368,7 +348,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {statsData.map((stat, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
@@ -393,9 +372,7 @@ const Dashboard = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Aktivitas & Grafik */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Aktivitas Terbaru */}
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-bold text-gray-900 dark:text-white">Aktivitas Terbaru</h2>
@@ -429,9 +406,7 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Grafik & Proyek */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Grafik Absensi */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                   <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Absensi Minggu Ini</h3>
                   <div className="space-y-3">
@@ -454,7 +429,6 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                {/* Proyek Aktif */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">Proyek Aktif</h3>
@@ -493,9 +467,7 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Right Column - Reminder & Divisi */}
             <div className="space-y-6">
-              {/* Reminder */}
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Pengingat</h3>
                 <div className="space-y-3">
@@ -522,7 +494,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Distribusi Divisi */}
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Distribusi Divisi</h3>
                 <div className="space-y-3">
@@ -545,7 +516,6 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              {/* Quick Actions */}
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Aksi Cepat</h3>
                 <div className="grid grid-cols-2 gap-3">
@@ -578,7 +548,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Footer */}
           <footer className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
             <p className="text-center text-sm text-gray-500 dark:text-gray-400">
               © 2025 PT Javis Teknologi Albarokah | Sistem Manajemen Karyawan
@@ -587,7 +556,6 @@ const Dashboard = () => {
         </main>
       </div>
 
-      {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"

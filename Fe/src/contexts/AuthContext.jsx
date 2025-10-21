@@ -1,4 +1,3 @@
-// FE/src/contexts/AuthContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,16 +20,14 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  // ✅ FIX: Base URL untuk production (Railway)
   const baseURL = 'https://login-system-javis-production.up.railway.app';
 
   const checkAuthStatus = async () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        console.log('🔍 Checking auth status...');
-        
-        // ✅ FIX: Ganti API_BASE menjadi baseURL
+        console.log('Checking auth status...');
+
         const response = await fetch(`${baseURL}/auth/verify`, {
           method: 'GET',
           headers: {
@@ -43,7 +40,7 @@ export const AuthProvider = ({ children }) => {
           const data = await response.json();
           if (data.success) {
             setUser(data.user);
-            console.log('✅ User authenticated:', data.user.email);
+            console.log('User authenticated:', data.user.email);
           } else {
             localStorage.removeItem('token');
           }
@@ -61,9 +58,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('🔄 Attempting login...');
-      
-      // ✅ FIX: Ganti API_BASE menjadi baseURL
+      console.log('Attempting login...');
+
       const response = await fetch(`${baseURL}/api/auth/login`, {
         method: 'POST',
         headers: {
@@ -72,17 +68,16 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, password }),
       });
 
-      console.log('📨 Response status:', response.status);
+      console.log('Response status:', response.status);
       
       const data = await response.json();
-      console.log('📦 Login response:', data);
+      console.log('Login response:', data);
 
       if (data.success && data.token) {
         localStorage.setItem('token', data.token);
         setUser(data.user);
-        
-        // Redirect ke dashboard setelah login berhasil
-        console.log('🎉 Login successful, redirecting to dashboard...');
+
+        console.log('Login successful, redirecting to dashboard...');
         navigate('/dashboard');
         
         return { success: true };
@@ -94,7 +89,7 @@ export const AuthProvider = ({ children }) => {
       }
 
     } catch (error) {
-      console.error('💥 Login error:', error);
+      console.error('Login error:', error);
       return {
         success: false,
         error: 'Network error: Unable to connect to server.'

@@ -1,4 +1,3 @@
-// BE/server.js
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -7,10 +6,9 @@ import dashboardRoutes from './routes/dashboard.js';
 
 const app = express();
 
-// CORS configuration - allow all origins in development
 app.use(cors({
   origin: [
-    'https://javis-teknologi.vercel.app', // URL Vercel Anda
+    'https://javis-teknologi.vercel.app', 
     'http://localhost:3000'
   ],
   credentials: true,
@@ -18,36 +16,31 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Handle preflight requests
 app.options('*', cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Logging middleware
 app.use((req, res, next) => {
-  console.log(`📨 ${new Date().toLocaleTimeString()} - ${req.method} ${req.url}`);
+  console.log(`${new Date().toLocaleTimeString()} - ${req.method} ${req.url}`);
   console.log('   Origin:', req.headers.origin || 'No origin');
   next();
 });
 
-// Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     success: true,
-    message: '✅ Server is running',
+    message: 'Server is running',
     timestamp: new Date().toISOString(),
     port: process.env.PORT || 5000,
     environment: process.env.NODE_ENV || 'development'
   });
 });
 
-// Test endpoint untuk CORS
 app.get('/api/test-cors', (req, res) => {
   res.json({
     success: true,
@@ -57,11 +50,10 @@ app.get('/api/test-cors', (req, res) => {
   });
 });
 
-// Root endpoint
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: '🚀 JAVIS TEKNOLOGI ALBAROKAH Backend API',
+    message: 'JAVIS TEKNOLOGI ALBAROKAH Backend API',
     version: '1.0.0',
     endpoints: {
       health: '/api/health',
@@ -72,16 +64,14 @@ app.get('/', (req, res) => {
   });
 });
 
-// Error handling middleware
 app.use((error, req, res, next) => {
-  console.error('🚨 Server error:', error);
+  console.error('Server error:', error);
   res.status(500).json({
     success: false,
     error: 'Internal server error'
   });
 });
 
-// 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
@@ -92,13 +82,13 @@ app.use('*', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log('🚀 ========================================');
-  console.log('🚀 JAVIS TEKNOLOGI ALBAROKAH Backend Started');
-  console.log('🚀 ========================================');
-  console.log(`📍 Server running on port ${PORT}`);
-  console.log(`🌐 Local: http://localhost:${PORT}`);
-  console.log(`🔗 Health: http://localhost:${PORT}/api/health`);
-  console.log(`🔄 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log('📧 Test credentials: admin@javisteknologi.com / password123');
+  console.log('========================================');
+  console.log('JAVIS TEKNOLOGI ALBAROKAH Backend Started');
+  console.log('========================================');
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Local: http://localhost:${PORT}`);
+  console.log(`Health: http://localhost:${PORT}/api/health`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log('Test credentials: admin@javisteknologi.com / admin123');
   console.log('==========================================');
 });
